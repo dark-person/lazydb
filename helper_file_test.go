@@ -27,7 +27,7 @@ func TestCreateFile(t *testing.T) {
 	f, _ := os.Create(existPath)
 	f.Close()
 
-	// Prepare Test Case, with direct declare with `&AppDB{}`
+	// Prepare Test Case, with direct declare with `&LazyDB{}`
 	tests := []testCase{
 		// Valid Path, not exist database
 		{filepath.Join(t.TempDir(), "new.db"), false},

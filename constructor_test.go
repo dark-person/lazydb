@@ -125,28 +125,28 @@ func TestClose(t *testing.T) {
 
 	// Run Tests
 	for idx, tt := range tests {
-		var a *LazyDB
+		var l *LazyDB
 
 		if tt.path == nil {
-			// Create AppDB with nil db value
-			a = &LazyDB{db: nil}
+			// Create LazyDB with nil db value
+			l = &LazyDB{db: nil}
 		} else {
 			// Create database file with createFile()
-			a = &LazyDB{dbPath: *tt.path}
+			l = &LazyDB{dbPath: *tt.path}
 			createDbFile(*tt.path)
 
 			// Connect database with connect(), with db is non-nil value ONLY
-			a.db, _ = sql.Open(DatabaseType, a.dbPath)
+			l.db, _ = sql.Open(DatabaseType, l.dbPath)
 		}
 
-		// Close database connection with appDB.Close()
-		err := a.Close()
+		// Close database connection with LazyDB.Close()
+		err := l.Close()
 
 		// Check want errors
 		assert.EqualValues(t, tt.wantErr, err != nil,
 			"Case %d: Unexpected error as %v", idx, err)
 
 		// Ensure Nil Value of sql.DB
-		assert.Nilf(t, a.db, "Case %d: Unexpected non-nil database connection.", idx)
+		assert.Nilf(t, l.db, "Case %d: Unexpected non-nil database connection.", idx)
 	}
 }

@@ -43,7 +43,7 @@ func New(opts ...DatabaseOption) *LazyDB {
 	}
 }
 
-// Connect to database, when path already stored in AppDB.
+// Connect to database, when path already stored in LazyDB.
 func (l *LazyDB) Connect() error {
 	// Prevent Empty Path
 	if l.dbPath == "" {
@@ -70,7 +70,7 @@ func (l *LazyDB) Connect() error {
 
 // Close all existing database connection.
 //
-// If AppDB has no database connected, then this function has no effect,
+// If LazyDB has no database connected, then this function has no effect,
 // with no error returned.
 func (l *LazyDB) Close() error {
 	// Prevent no connection for nil pointer

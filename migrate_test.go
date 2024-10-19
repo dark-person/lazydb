@@ -20,16 +20,16 @@ var fsNormalTestV2 embed.FS
 //go:embed test_schema/normal_v3/*
 var fsNormalTestV3 embed.FS
 
-// Function to prepare usable AppDB object.
+// Function to prepare usable LazyDB object.
 // Purpose of function is to reuse code.
 //
-// Developer MUST close AppDB after testing is completed,
+// Developer MUST close LazyDB after testing is completed,
 // to prevent filesystem blocking database removal.
-func prepareTestAppDB(t *testing.T, dbName string) (*LazyDB, error) {
+func prepareTestLazyDB(t *testing.T, dbName string) (*LazyDB, error) {
 	// Remove any existing database
 	os.Remove(dbName)
 
-	// Create AppDB object
+	// Create LazyDB object
 	l := New(
 		DbPath(dbName),
 		Version(3),
@@ -44,14 +44,14 @@ func prepareTestAppDB(t *testing.T, dbName string) (*LazyDB, error) {
 	return l, err
 }
 
-// Function to prepare usable AppDB object.
+// Function to prepare usable LazyDB object.
 // Purpose of function is to reuse code.
 //
-// Developer MUST close AppDB after testing is completed,
+// Developer MUST close LazyDB after testing is completed,
 // to prevent filesystem blocking database removal.
-func prepareTestLatestAppDB(t *testing.T, dbName string) (*LazyDB, error) {
+func prepareTestLatestLazyDB(t *testing.T, dbName string) (*LazyDB, error) {
 	// Use existing func
-	a, err := prepareTestAppDB(t, dbName)
+	a, err := prepareTestLazyDB(t, dbName)
 	if err != nil {
 		panic(err)
 	}
@@ -96,8 +96,8 @@ func TestToLatest(t *testing.T) {
 	// Get temp directory
 	tempDir := t.TempDir()
 
-	// Create AppDB object
-	a, err := prepareTestAppDB(t, filepath.Join(tempDir, "test.db"))
+	// Create LazyDB object
+	a, err := prepareTestLazyDB(t, filepath.Join(tempDir, "test.db"))
 	if err != nil {
 		t.Fatal("Failed to prepare db: ", err)
 	}
@@ -153,8 +153,8 @@ func TestToSpecific(t *testing.T) {
 
 	// Run tests
 	for idx, tt := range tests {
-		// Create AppDB object
-		a, err := prepareTestLatestAppDB(t, filepath.Join(tempDir, tt.dbName))
+		// Create LazyDB object
+		a, err := prepareTestLatestLazyDB(t, filepath.Join(tempDir, tt.dbName))
 
 		if err != nil {
 			t.Fatal("Failed to prepare db: ", err)
