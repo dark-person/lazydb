@@ -16,3 +16,5 @@ require (
 	go.uber.org/atomic v1.7.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+retract v0.1.0
