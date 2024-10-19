@@ -1,4 +1,4 @@
-module github.com/dark-person/LazyDB
+module github.com/dark-person/lazydb
 
 go 1.23.1
 

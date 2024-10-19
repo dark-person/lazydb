@@ -10,7 +10,13 @@ Note: You must has `CGO` enabled to compile this project.
 
 ## Get Started
 
-An example as:
+Run this command:
+
+```bash
+go get github.com/dark-person/lazydb
+```
+
+An example to use this package as:
 
 ```go
 //go:embed all:schema
