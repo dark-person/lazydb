@@ -38,18 +38,18 @@ func main() {
     // Connect to db, which will create file if necessary
     err = db.Connect()
     if err != nil {
-	    panic(err)
+        panic(err)
     }
     defer db.Close()
 
     // Migration performed
     backup, err := db.Migrate()
     if err != nil {
-	    panic(err)
+        panic(err)
     }
 
     if backup != "" {
-	    fmt.Println("Auto backup as migration performed: " + backup)
+        fmt.Println("Auto backup as migration performed: " + backup)
     }
     // Usage here...
 }
