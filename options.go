@@ -1,16 +1,14 @@
 package lazydb
 
-import (
-	"embed"
-)
+import "io/fs"
 
 // Final options for create database. Internal usage only.
 type databaseOpts struct {
-	DbPath        string   // Absolute path of .db file
-	MigrateFS     embed.FS // FS to be used for migration
-	MigrateDir    string   // directory that contains migration sql files
-	SchemaVersion uint     // Schema version that using
-	BackupDir     string   // directory that used to backup database file
+	DbPath        string // Absolute path of .db file
+	MigrateFS     fs.FS  // FS to be used for migration
+	MigrateDir    string // directory that contains migration sql files
+	SchemaVersion uint   // Schema version that using
+	BackupDir     string // directory that used to backup database file
 }
 
 // Option of database.
@@ -32,7 +30,7 @@ func DbPath(path string) DatabaseOption {
 
 // ---------------------------------------------------
 type migrateParam struct {
-	MigrateFS  embed.FS
+	MigrateFS  fs.FS
 	MigrateDir string
 }
 
@@ -41,8 +39,8 @@ func (m migrateParam) apply(opts *databaseOpts) {
 	opts.MigrateDir = m.MigrateDir
 }
 
-// Use given embed file system to perform migration.
-func Migrate(f embed.FS, dir string) DatabaseOption {
+// Use given file system (e.g. embed.FS) to perform migration.
+func Migrate(f fs.FS, dir string) DatabaseOption {
 	return migrateParam{f, dir}
 }
 

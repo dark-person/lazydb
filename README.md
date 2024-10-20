@@ -6,7 +6,7 @@ Go SQLite collection for lazy people.
 Include these feature:
 
 - Create SQLite database file
-- Migration with `embed.fs`
+- Migration with `fs.fs`
 - Backup when migration
 
 Note: You must has `CGO` enabled to compile this project.

@@ -1,9 +1,9 @@
 package lazydb
 
 import (
-	"embed"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 )
@@ -58,15 +58,15 @@ func IsFileExist(path string) bool {
 	return err == nil
 }
 
-// Get largest schema version in given embed.FS, by checking prefix of embed sql filename.
+// Get largest schema version in given fs.FS, by checking prefix of sql filename.
 // This function NOT ensure migration can be performed successfully.
 //
 // Any failure when attempt will return error and version = 0.
-func LargestSchemaVer(fs embed.FS, folder string) (uint, error) {
+func LargestSchemaVer(fileSys fs.FS, folder string) (uint, error) {
 	var maxVersion int
 
 	// Get Directory List 1st
-	entries, err := fs.ReadDir(folder)
+	entries, err := fs.ReadDir(fileSys, folder)
 	if err != nil {
 		return 0, err
 	}

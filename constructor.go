@@ -2,7 +2,7 @@ package lazydb
 
 import (
 	"database/sql"
-	"embed"
+	"io/fs"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -16,11 +16,11 @@ import (
 type LazyDB struct {
 	db *sql.DB // Database connection
 
-	dbPath        string   // Database absolute path, for easy reuse
-	migrateFs     embed.FS // FS for schema migrations sql scripts
-	migrateDir    string   // Directory for storing migration script, default is "schema"
-	schemaVersion uint     // version of migration script to use
-	backupDir     string   // directory to backup, or empty string for no backup. Default is empty string.
+	dbPath        string // Database absolute path, for easy reuse
+	migrateFs     fs.FS  // FS for schema migrations sql scripts
+	migrateDir    string // Directory for storing migration script, default is "schema"
+	schemaVersion uint   // version of migration script to use
+	backupDir     string // directory to backup, or empty string for no backup. Default is empty string.
 }
 
 // Create a new LazyDB.
