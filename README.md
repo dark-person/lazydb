@@ -1,5 +1,7 @@
 # LazyDB
 [![Go Reference](https://pkg.go.dev/badge/github.com/dark-person/lazydb.svg)](https://pkg.go.dev/github.com/dark-person/lazydb)
+![GitHub Release](https://img.shields.io/github/v/release/dark-person/lazydb?sort=date)
+[![Go Report Card](https://goreportcard.com/badge/gojp/goreportcard)](https://goreportcard.com/report/github.com/dark-person/lazydb)
 
 Go SQLite collection for lazy people.
 
