@@ -56,22 +56,22 @@ func (l *LazyDB) Migrate() (backupPath string, err error) {
 // Otherwise empty string will be returned.
 func (l *LazyDB) MigrateTo(version uint) (backupPath string, err error) {
 	// Prepare migration instance
-	m, err := l.migrateInstance()
+	l.mig, err = l.migrateInstance()
 	if err != nil {
 		return "", err
 	}
 
 	// Run backup
-	backupPath, err = l.backup(m)
+	backupPath, err = l.backup(l.mig)
 	if err != nil {
 		return backupPath, err
 	}
 
 	// Perform migration depend on version is equals to 0
 	if version == 0 {
-		err = m.Up()
+		err = l.mig.Up()
 	} else {
-		err = m.Migrate(version)
+		err = l.mig.Migrate(version)
 	}
 
 	// Early return if no error

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"io/fs"
 
+	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -14,7 +15,8 @@ import (
 //   - Wrapper function to simplify sql.stmt
 //   - Migration support if migration fs & directory is properly set
 type LazyDB struct {
-	db *sql.DB // Database connection
+	db  *sql.DB          // Database connection
+	mig *migrate.Migrate // Migration instance
 
 	dbPath        string // Database absolute path, for easy reuse
 	migrateFs     fs.FS  // FS for schema migrations sql scripts
