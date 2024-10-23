@@ -18,19 +18,10 @@ func (l *LazyDB) createBackup() (dest string, err error) {
 		return "", nil // Consider as graceful return
 	}
 
-	// Prepare timestamp for backup
-	str := time.Now().Format("20060102150405")
+	// Prepare database name
+	dest = defaultBackupPath(l.dbPath, l.backupDir)
 
-	// Get ext
-	ext := filepath.Ext(l.dbPath)
-
-	// Get original database name
-	base := filepath.Base(l.dbPath)
-	base = strings.Replace(base, ext, "", 1)
-
-	// Perform backup
-	dest = filepath.Join(l.backupDir, base+"_bk_"+str+ext)
-
+	// Create file to prevent directory not existing
 	err = createDbFile(dest)
 	if err != nil {
 		return dest, err
@@ -68,4 +59,20 @@ func (l *LazyDB) backup(m *migrate.Migrate) (dest string, err error) {
 	}
 
 	return "", nil // Consider as graceful return
+}
+
+// Get default absolute path to backup database.
+func defaultBackupPath(dbPath string, backupDir string) string {
+	// Prepare timestamp for backup
+	str := time.Now().Format("20060102150405")
+
+	// Get ext
+	ext := filepath.Ext(dbPath)
+
+	// Get original database name
+	base := filepath.Base(dbPath)
+	base = strings.Replace(base, ext, "", 1)
+
+	// Perform backup
+	return filepath.Join(backupDir, base+"_bk_"+str+ext)
 }
