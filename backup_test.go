@@ -34,7 +34,7 @@ func createOutdatedDb(path string) (*LazyDB, error) {
 }
 
 // Ensure backup perform when backup directory is set.
-func TestCreateBackup(t *testing.T) {
+func TestCreateAutoBackup(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	path := filepath.Join(tmpDir, "backupTest.db")
@@ -71,7 +71,7 @@ func TestCreateBackup(t *testing.T) {
 }
 
 // Ensure no backup when backup directory not set.
-func TestCreateBackupNoDir(t *testing.T) {
+func TestCreateAutoBackupNoDir(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	path := filepath.Join(tmpDir, "data.db")

@@ -31,8 +31,8 @@ func (l *LazyDB) createBackup() (dest string, err error) {
 	return dest, err
 }
 
-// Start backup process. If version is latest (i.e. no need to update), then no backup will be performed.
-func (l *LazyDB) backup(m *migrate.Migrate) (dest string, err error) {
+// Start auto backup process. If version is latest (i.e. no need to update), then no auto backup will be performed.
+func (l *LazyDB) autoBackup(m *migrate.Migrate) (dest string, err error) {
 	if m == nil {
 		return "", fmt.Errorf("migrate instance is nil")
 	}

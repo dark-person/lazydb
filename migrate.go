@@ -62,7 +62,7 @@ func (l *LazyDB) MigrateTo(version uint) (backupPath string, err error) {
 	}
 
 	// Run backup
-	backupPath, err = l.backup(l.mig)
+	backupPath, err = l.autoBackup(l.mig)
 	if err != nil {
 		return backupPath, err
 	}
