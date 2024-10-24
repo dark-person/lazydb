@@ -52,6 +52,7 @@ func TestCreateAutoBackup(t *testing.T) {
 		DbPath(path),
 		Migrate(fsNormalTestV3, dirNormalTestV3),
 		BackupDir(filepath.Join(tmpDir, "bk")),
+		Version(0),
 	)
 
 	err = updated.Connect()
@@ -88,6 +89,7 @@ func TestCreateAutoBackupNoDir(t *testing.T) {
 	updated := New(
 		DbPath(path),
 		Migrate(fsNormalTestV3, dirNormalTestV3),
+		Version(0),
 	)
 
 	err = updated.Connect()
@@ -113,6 +115,8 @@ func TestBackupWithNewDb(t *testing.T) {
 	newOne := New(
 		DbPath(path),
 		Migrate(fsNormalTestV3, dirNormalTestV3),
+		BackupDir(filepath.Join(tmpDir, "bk")),
+		Version(0),
 	)
 
 	err = newOne.Connect()
