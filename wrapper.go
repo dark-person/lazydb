@@ -27,12 +27,12 @@ func (p *ParamQuery) Filled() string {
 // ----------------------------------------------------------------
 
 // Execute given query, by prepared statement.
-func (d *LazyDB) Exec(query string, args ...any) (sql.Result, error) {
-	if d.db == nil {
+func (l *LazyDB) Exec(query string, args ...any) (sql.Result, error) {
+	if l.db == nil {
 		return nil, ErrNilDatabase
 	}
 
-	stmt, err := d.db.Prepare(query)
+	stmt, err := l.db.Prepare(query)
 	if err != nil {
 		return nil, err
 	}
@@ -44,8 +44,8 @@ func (d *LazyDB) Exec(query string, args ...any) (sql.Result, error) {
 //
 // Any failed query will cause a rollback, and return nil []sql.Result.
 // Only all queries successful will return valid sql.Result slices.
-func (d *LazyDB) ExecMultiple(pQueries []ParamQuery) ([]sql.Result, error) {
-	if d.db == nil {
+func (l *LazyDB) ExecMultiple(pQueries []ParamQuery) ([]sql.Result, error) {
+	if l.db == nil {
 		return nil, ErrNilDatabase
 	}
 
@@ -56,7 +56,7 @@ func (d *LazyDB) ExecMultiple(pQueries []ParamQuery) ([]sql.Result, error) {
 	results := make([]sql.Result, 0)
 
 	// Begin transaction
-	tx, err := d.db.Begin()
+	tx, err := l.db.Begin()
 	if err != nil {
 		return nil, err
 	}
@@ -89,12 +89,12 @@ func (d *LazyDB) ExecMultiple(pQueries []ParamQuery) ([]sql.Result, error) {
 }
 
 // Wrapper for Query() function, using prepared statement.
-func (d *LazyDB) Query(query string, args ...any) (*sql.Rows, error) {
-	if d.db == nil {
+func (l *LazyDB) Query(query string, args ...any) (*sql.Rows, error) {
+	if l.db == nil {
 		return nil, ErrNilDatabase
 	}
 
-	stmt, err := d.db.Prepare(query)
+	stmt, err := l.db.Prepare(query)
 	if err != nil {
 		return nil, err
 	}
@@ -103,12 +103,12 @@ func (d *LazyDB) Query(query string, args ...any) (*sql.Rows, error) {
 }
 
 // Wrapper for QueryRow() function, using prepared statement.
-func (d *LazyDB) QueryRow(query string, args ...any) (*sql.Row, error) {
-	if d.db == nil {
+func (l *LazyDB) QueryRow(query string, args ...any) (*sql.Row, error) {
+	if l.db == nil {
 		return nil, ErrNilDatabase
 	}
 
-	stmt, err := d.db.Prepare(query)
+	stmt, err := l.db.Prepare(query)
 	if err != nil {
 		return nil, err
 	}

@@ -52,6 +52,10 @@ func (s schemaVer) apply(opts *databaseOpts) {
 	opts.SchemaVersion = uint(s)
 }
 
+// Specific version of schema to be used.
+//
+// If value is <= 0, then it will use as latest version as possible
+// that defined in migration schema fs.
 func Version(ver int) DatabaseOption {
 	return schemaVer(ver)
 }
