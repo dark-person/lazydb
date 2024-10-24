@@ -131,3 +131,37 @@ func TestBackupWithNewDb(t *testing.T) {
 	assert.Nilf(t, err, "Error when migrate new db")
 	assert.EqualValuesf(t, "", bk, "No backup should appear in new created db.")
 }
+
+// Ensure no backup when backup directory not set.
+func TestCreateAutoBackupVersionSpecified(t *testing.T) {
+	tmpDir := t.TempDir()
+
+	path := filepath.Join(tmpDir, "data.db")
+
+	// ================== Old database =================
+	original, err := createOutdatedDb(path)
+	if err != nil {
+		t.Errorf("Failed when connect original db")
+		return
+	}
+	original.Close()
+
+	// ================== Update Database =====================
+	updated := New(
+		DbPath(path),
+		Migrate(fsNormalTestV3, dirNormalTestV3),
+		BackupDir(filepath.Join(tmpDir, "bk")),
+		Version(2),
+	)
+
+	err = updated.Connect()
+	if err != nil {
+		t.Errorf("Failed when connect updated db")
+		return
+	}
+	defer updated.Close()
+
+	bk, err := updated.Migrate()
+	assert.Nilf(t, err, "Error when migrate")
+	assert.EqualValuesf(t, "", bk, "Unexpected backup location")
+}

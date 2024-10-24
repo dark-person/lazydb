@@ -51,6 +51,11 @@ func (l *LazyDB) autoBackup(m *migrate.Migrate) (dest string, err error) {
 		return "", err
 	}
 
+	// Ensure latest version in lazydb config
+	if l.schemaVersion > 0 && l.schemaVersion < latest {
+		latest = l.schemaVersion
+	}
+
 	// Not create backup if new database, or schema up to date
 	if latest <= current || isNew {
 		return "", nil // Consider as graceful return
