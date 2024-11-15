@@ -94,6 +94,7 @@ func TestConnect(t *testing.T) {
 		err := tt.a.Connect()
 
 		assert.ErrorIsf(t, err, tt.want, "Case %d: Unexpected error result: %v", idx, err)
+		assert.EqualValuesf(t, err == nil, tt.a.Connected(), "Case %d: Unexpected connected flag", idx)
 
 		// Close connection (by sql library but not LazyDB)
 		if tt.a.db != nil {

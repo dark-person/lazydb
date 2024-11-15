@@ -18,6 +18,8 @@ type LazyDB struct {
 	db  *sql.DB          // Database connection
 	mig *migrate.Migrate // Migration instance
 
+	connected bool // Determine database is connected
+
 	dbPath        string // Database absolute path, for easy reuse
 	migrateFs     fs.FS  // FS for schema migrations sql scripts
 	migrateDir    string // Directory for storing migration script, default is "schema"
@@ -67,7 +69,14 @@ func (l *LazyDB) Connect() error {
 	}
 
 	// Test DB connection by ping
-	return l.db.Ping()
+	err = l.db.Ping()
+	if err != nil {
+		return err
+	}
+
+	// Database successfully connected
+	l.connected = true
+	return nil
 }
 
 // Close all existing database connection.
@@ -91,4 +100,10 @@ func (l *LazyDB) Close() error {
 // Get *sql.DB created.
 func (l *LazyDB) DB() *sql.DB {
 	return l.db
+}
+
+// Check if database is connected.
+// Its value only changed when Connect() is called successfully.
+func (l *LazyDB) Connected() bool {
+	return l.connected
 }

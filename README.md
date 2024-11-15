@@ -69,6 +69,12 @@ func main() {
     if backup != "" {
         fmt.Println("Auto backup as migration performed: " + backup)
     }
+
+    // Optional: Ensure connection is success
+    if !db.Connected() {
+        fmt.Println("Database is not connected")
+    }
+
     // Usage here...
 }
 ```
