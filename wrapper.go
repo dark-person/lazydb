@@ -66,12 +66,12 @@ func (l *LazyDB) ExecMultiple(pQueries []ParamQuery) ([]sql.Result, error) {
 	for _, query := range pQueries {
 		stmt, err := tx.Prepare(query.Query)
 		if err != nil {
-			return nil, fmt.Errorf("Failed to prepare '%s': %v", query.Query, err)
+			return nil, fmt.Errorf("failed to prepare '%s': %v", query.Query, err)
 		}
 
 		result, err := stmt.Exec(query.Args...)
 		if err != nil {
-			return nil, fmt.Errorf("Failed to exec '%s' with (%v): %v", query.Query, query.Args, err)
+			return nil, fmt.Errorf("failed to exec '%s' with (%v): %v", query.Query, query.Args, err)
 		}
 
 		// Record result of query

@@ -18,4 +18,4 @@ var ErrEmptyStmt = errors.New("no statement to execute")
 var ErrEmptyDir = errors.New("empty string for migration directory")
 
 // Error when migration directory structure is not correct.
-var ErrInvalidDir = errors.New("invalid migration directory structure.")
+var ErrInvalidDir = errors.New("invalid migration directory structure")
