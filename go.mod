@@ -3,7 +3,7 @@ module github.com/dark-person/lazydb
 go 1.23.8
 
 require (
-	github.com/golang-migrate/migrate/v4 v4.18.2
+	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/stretchr/testify v1.10.0
 )
