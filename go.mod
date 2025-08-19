@@ -1,6 +1,6 @@
 module github.com/dark-person/lazydb
 
-go 1.23.8
+go 1.24.6
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.18.3
