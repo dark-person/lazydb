@@ -14,7 +14,7 @@ import (
 // This function will ignore backup directory setting.
 func (l *LazyDB) BackupTo(dest string) (err error) {
 	// Create file to prevent directory not existing
-	err = createDbFile(dest)
+	err = createDBFile(dest)
 	if err != nil {
 		return err
 	}

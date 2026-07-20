@@ -9,7 +9,7 @@ import (
 )
 
 // Create an outdated LazyDB file.
-func createOutdatedDb(path string) (*LazyDB, error) {
+func createOutdatedDB(path string) (*LazyDB, error) {
 	// Prepare database of version 2
 	original := New(
 		DbPath(path),
@@ -40,7 +40,7 @@ func TestCreateAutoBackup(t *testing.T) {
 	path := filepath.Join(tmpDir, "backupTest.db")
 
 	// ================== Old database =================
-	original, err := createOutdatedDb(path)
+	original, err := createOutdatedDB(path)
 	if err != nil {
 		t.Errorf("Failed when connect original db")
 		return
@@ -78,7 +78,7 @@ func TestCreateAutoBackupNoDir(t *testing.T) {
 	path := filepath.Join(tmpDir, "data.db")
 
 	// ================== Old database =================
-	original, err := createOutdatedDb(path)
+	original, err := createOutdatedDB(path)
 	if err != nil {
 		t.Errorf("Failed when connect original db")
 		return
@@ -139,7 +139,7 @@ func TestCreateAutoBackupVersionSpecified(t *testing.T) {
 	path := filepath.Join(tmpDir, "data.db")
 
 	// ================== Old database =================
-	original, err := createOutdatedDb(path)
+	original, err := createOutdatedDB(path)
 	if err != nil {
 		t.Errorf("Failed when connect original db")
 		return
