@@ -21,6 +21,7 @@ type LazyDB struct {
 	connected bool // Determine database is connected
 
 	dbPath        string // Database absolute path, for easy reuse
+	connectOpts   string // Option string to append after filename, used when connect
 	migrateFs     fs.FS  // FS for schema migrations sql scripts
 	migrateDir    string // Directory for storing migration script, default is "schema"
 	schemaVersion uint   // version of migration script to use
@@ -40,6 +41,7 @@ func New(opts ...DatabaseOption) *LazyDB {
 	// Return object
 	return &LazyDB{
 		dbPath:        opt.DbPath,
+		connectOpts:   opt.ConnectOptions,
 		migrateDir:    opt.MigrateDir,
 		migrateFs:     opt.MigrateFS,
 		schemaVersion: opt.SchemaVersion,
@@ -63,7 +65,12 @@ func (l *LazyDB) Connect() error {
 	}
 
 	// Open database connection, which create file if not exist
-	l.db, err = sql.Open(DatabaseType, l.dbPath)
+	dsn := l.dbPath
+	if l.connectOpts != "" {
+		dsn = "file:" + l.dbPath + "?" + l.connectOpts
+	}
+
+	l.db, err = sql.Open(DatabaseType, dsn)
 	if err != nil {
 		return err
 	}
@@ -106,4 +113,14 @@ func (l *LazyDB) DB() *sql.DB {
 // Its value only changed when Connect() is called successfully.
 func (l *LazyDB) Connected() bool {
 	return l.connected
+}
+
+// DSN will return the data source name for this lazydb.
+// If no data source name options is set, then plain file name will be used.
+func (l *LazyDB) DSN() string {
+	if l.connectOpts != "" {
+		return "file:" + l.dbPath + "?" + l.connectOpts
+	} else {
+		return l.dbPath
+	}
 }
