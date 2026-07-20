@@ -85,6 +85,8 @@ func TestConnect(t *testing.T) {
 		{&LazyDB{dbPath: filepath.Join(t.TempDir(), "connect_test.db")}, nil},
 		// Existed database
 		{&LazyDB{dbPath: existPath}, nil},
+		// Database with DSN Option
+		{&LazyDB{dbPath: filepath.Join(t.TempDir(), "connect_test.db"), connectOpts: "_journal_mode=WAL"}, nil},
 		// Empty Path
 		{&LazyDB{dbPath: ""}, ErrEmptyPath},
 	}
@@ -150,4 +152,17 @@ func TestClose(t *testing.T) {
 		// Ensure Nil Value of sql.DB
 		assert.Nilf(t, l.db, "Case %d: Unexpected non-nil database connection.", idx)
 	}
+}
+
+func TestDSN(t *testing.T) {
+	l := New(
+		DbPath("test.db"),
+	)
+	assert.Equal(t, "test.db", l.DSN())
+
+	l = New(
+		DbPath("test.db"),
+		ConnectOptions("cache=shared&mode=memory"),
+	)
+	assert.Equal(t, "file:test.db?cache=shared&mode=memory", l.DSN())
 }
