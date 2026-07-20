@@ -115,3 +115,12 @@ func (l *LazyDB) QueryRow(query string, args ...any) (*sql.Row, error) {
 
 	return stmt.QueryRow(args...), nil
 }
+
+// Tx starts a transaction with background context.
+// The default isolation level is dependent on the driver.
+func (l *LazyDB) Tx() (*sql.Tx, error) {
+	if l.db == nil {
+		return nil, ErrNilDatabase
+	}
+	return l.db.Begin()
+}
