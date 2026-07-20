@@ -4,7 +4,7 @@ import "io/fs"
 
 // Final options for create database. Internal usage only.
 type databaseOpts struct {
-	DbPath         string // Absolute path of .db file
+	DBPath         string // Absolute path of .db file
 	ConnectOptions string // DSN Options in connection string, e.g. _journal_mode, _mutex
 	MigrateFS      fs.FS  // FS to be used for migration
 	MigrateDir     string // directory that contains migration sql files
@@ -21,7 +21,7 @@ type DatabaseOption interface {
 type dbPath string
 
 func (p dbPath) apply(opts *databaseOpts) {
-	opts.DbPath = string(p)
+	opts.DBPath = string(p)
 }
 
 // DbPath will provide option for lazyDB constructor to use given database path.

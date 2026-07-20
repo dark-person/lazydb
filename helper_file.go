@@ -13,7 +13,7 @@ import (
 //
 // Any incorrect path or creation failed will return an error,
 // except database file is already exist.
-func createDbFile(path string) error {
+func createDBFile(path string) error {
 	// Prevent invalid database path
 	if path == "" {
 		return ErrEmptyPath

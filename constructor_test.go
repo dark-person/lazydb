@@ -136,7 +136,7 @@ func TestClose(t *testing.T) {
 		} else {
 			// Create database file with createFile()
 			l = &LazyDB{dbPath: *tt.path}
-			createDbFile(*tt.path)
+			createDBFile(*tt.path)
 
 			// Connect database with connect(), with db is non-nil value ONLY
 			l.db, _ = sql.Open(DatabaseType, l.dbPath)

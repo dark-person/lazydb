@@ -43,7 +43,7 @@ func TestCreateFile(t *testing.T) {
 
 	for idx, tt := range tests {
 		// Run Create
-		err := createDbFile(tt.dbPath)
+		err := createDBFile(tt.dbPath)
 		if tt.wantErr {
 			assert.Errorf(t, err, "Case %d - Expected return error.", idx+1)
 		} else {

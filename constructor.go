@@ -40,7 +40,7 @@ func New(opts ...DatabaseOption) *LazyDB {
 
 	// Return object
 	return &LazyDB{
-		dbPath:        opt.DbPath,
+		dbPath:        opt.DBPath,
 		connectOpts:   opt.ConnectOptions,
 		migrateDir:    opt.MigrateDir,
 		migrateFs:     opt.MigrateFS,
@@ -59,7 +59,7 @@ func (l *LazyDB) Connect() error {
 	var err error
 
 	// Create Database if need
-	err = createDbFile(l.dbPath)
+	err = createDBFile(l.dbPath)
 	if err != nil {
 		return err
 	}
