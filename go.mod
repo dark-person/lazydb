@@ -4,7 +4,7 @@ go 1.25.12
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.20.1
-	github.com/mattn/go-sqlite3 v1.14.50
+	github.com/mattn/go-sqlite3 v1.14.52
 	github.com/stretchr/testify v1.12.1
 )
 
